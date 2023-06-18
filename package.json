@@ -1,0 +1,23 @@
+{
+  "name": "testwithcypress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^12.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danieljazz/TestingWIthCypress.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Danieljazz/TestingWIthCypress/issues"
+  },
+  "homepage": "https://github.com/Danieljazz/TestingWIthCypress#readme",
+  "description": ""
+}
