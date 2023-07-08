@@ -1,36 +1,36 @@
 /// <reference types="cypress" />
-
+import loginPage from "../../pages/loginPage";
 describe("testing login page", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5000");
+    cy.visit("http://localhost:3000");
   });
 
   it("Presence of password, user inputs", () => {
-    cy.get("#username").should("be.visible");
-    cy.get("#password").should("be.visible");
+    loginPage.elements.username().should("be.visible");
+    loginPage.elements.password().should("be.visible");
   });
 
   it("Username validation text assert", () => {
-    cy.get("#username").click();
-    cy.get("#password").click();
-    cy.get("#username-helper-text").should("have.text", "Username is required");
+    loginPage.elements.username().click();
+    loginPage.elements.password().click();
+    loginPage.elements
+      .usernameValidation()
+      .should("have.text", "Username is required");
   });
 
   it("Password input validation", () => {
-    let minChars = 4;
     let toShortPasswords = ["a", "aa", "aaa"];
     for (const minPassword of toShortPasswords) {
-      cy.get("#password").clear();
-      cy.get("#password").type(`${minPassword}`);
-      cy.get("#username").click();
-      cy.get("#password-helper-text").should(
-        "have.text",
-        "Password must contain at least 4 characters"
-      );
+      loginPage.elements.password().clear();
+      loginPage.elements.password().type(`${minPassword}`);
+      loginPage.elements.username().click();
+      loginPage.elements
+        .passwordValidation()
+        .should("have.text", "Password must contain at least 4 characters");
     }
-    cy.get("#password").clear();
-    cy.get("#password").type(`aaaa`);
-    cy.get("#username").click();
-    cy.get("#password-helper-text").should("not.exist");
+    loginPage.elements.password().clear();
+    loginPage.elements.password().type(`aaaa`);
+    loginPage.elements.username().click();
+    loginPage.elements.passwordValidation().should("not.exist");
   });
 });

@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("loginViaUi", (user) => {
+  cy.get("#username").type(user.username);
+  cy.get("#password").type(user.password);
+  cy.get("[data-test='signin-submit']").click();
+  cy.get("[data-test='transaction-list']", { timeout: 5000 }).should(
+    "be.visible"
+  );
+});
