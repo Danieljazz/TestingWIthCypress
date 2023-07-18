@@ -2,6 +2,7 @@
 import loginPage from "../../pages/loginPage";
 describe("testing login page", () => {
   beforeEach(() => {
+    cy.task("resetData");
     cy.visit("http://localhost:3000");
   });
 
