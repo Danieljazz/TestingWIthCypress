@@ -1,13 +1,16 @@
 const { defineConfig } = require("cypress");
-const { dotenv } = require("dotenv");
-dotenv.config();
+const axios = require("axios");
 module.exports = defineConfig({
   e2e: {
+    env: {
+      BASE_BACKEND_URL: "http://localhost:3001",
+      BASE_UI_URL: "http://localhost:3000",
+    },
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on("task", {
         async resetData() {
-          await axios.post(`${process.env.BASE_BACKEND_URL}/testData/seed`);
+          await axios.post(`${config.env.BASE_BACKEND_URL}/testData/seed`);
           return null;
         },
       });
