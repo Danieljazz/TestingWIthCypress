@@ -3,7 +3,9 @@
 describe("Main dashboard", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
-    cy.loginViaUi({ username: "Katharina_Bernier", password: "s3cret" });
+    cy.fixture("./user/userLogin").then((data) => {
+      cy.loginViaUi(data);
+    });
   });
   it("Check user info", () => {
     cy.get("[data-test='sidenav-user-full-name']").should(
@@ -14,6 +16,8 @@ describe("Main dashboard", () => {
       "have.text",
       "@Katharina_Bernier"
     );
+    cy.transactionFilter(120, 880);
+    cy.pause();
   });
   it("Check bank account", () => {
     cy.get("[data-test='sidenav-user-full-name']").should(

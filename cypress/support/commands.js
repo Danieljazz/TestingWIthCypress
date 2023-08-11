@@ -31,3 +31,17 @@ Cypress.Commands.add("loginViaUi", (user) => {
     "be.visible"
   );
 });
+
+Cypress.Commands.add("transactionFilter", (min, max) => {
+  cy.get("[data-test='transaction-list-filter-amount-range-button']")
+    .scrollIntoView()
+    .click({ force: true });
+  cy.get("[data-test='transaction-list-filter-amount-range-slider']").click(
+    min * 0.1875,
+    0
+  );
+  cy.get("[data-test='transaction-list-filter-amount-range-slider']").click(
+    max * 0.2,
+    0
+  );
+});
