@@ -45,3 +45,7 @@ Cypress.Commands.add("transactionFilter", (min, max) => {
     0
   );
 });
+
+Cypress.Commands.add("getByDataId", (dataTestid) => {
+  return cy.get(`[data-test=${dataTestid}]`);
+});

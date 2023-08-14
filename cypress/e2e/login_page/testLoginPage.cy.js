@@ -3,7 +3,7 @@ import loginPage from "../../pages/loginPage";
 describe("testing login page", () => {
   beforeEach(() => {
     cy.task("resetData");
-    cy.visit(Cypress.env("BASE_UI_URL"));
+    cy.visit("/");
   });
 
   it("Presence of password, user inputs", () => {
