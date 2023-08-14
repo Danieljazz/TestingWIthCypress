@@ -16,8 +16,6 @@ describe("Main dashboard", () => {
       "have.text",
       "@Katharina_Bernier"
     );
-    cy.transactionFilter(120, 880);
-    cy.pause();
   });
   it("Check bank account", () => {
     cy.get("[data-test='sidenav-user-full-name']").should(
@@ -28,5 +26,18 @@ describe("Main dashboard", () => {
       "have.text",
       "@Katharina_Bernier"
     );
+  });
+  it("Check transaction filter", () => {
+    cy.transactionFilter(480, 880);
+    cy.get("[data-test='transaction-list']")
+      .find("li")
+      .should("have.length", 5);
+  });
+  it.only("Empty filter", () => {
+    cy.transactionFilter(480, 880);
+    cy.transactionFilter(580, 880);
+    cy.getByDataId("empty-list-header")
+      .find("h2")
+      .should("have.text", "No Transactions");
   });
 });
