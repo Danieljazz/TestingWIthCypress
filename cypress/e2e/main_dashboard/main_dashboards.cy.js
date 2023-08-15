@@ -27,13 +27,17 @@ describe("Main dashboard", () => {
       "@Katharina_Bernier"
     );
   });
-  it("Check transaction filter", () => {
+  it.only("Check transaction filter", () => {
     cy.transactionFilter(480, 880);
     cy.get("[data-test='transaction-list']")
       .find("li")
-      .should("have.length", 5);
+      .should("have.length", 5)
+      .and(($li) => {
+        $li.find("p").first().should("have.text", "kjh");
+      })
+      .pause();
   });
-  it.only("Empty filter", () => {
+  it("Empty filter", () => {
     cy.transactionFilter(480, 880);
     cy.transactionFilter(580, 880);
     cy.getByDataId("empty-list-header")
