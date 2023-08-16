@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
-
+import mainDashboard from "../../pages/mainDashboard";
+import MainDasboard from "../../pages/mainDashboard";
 describe("Main dashboard", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
@@ -8,14 +9,8 @@ describe("Main dashboard", () => {
     });
   });
   it("Check user info", () => {
-    cy.get("[data-test='sidenav-user-full-name']").should(
-      "have.text",
-      "Edgar J"
-    );
-    cy.get("[data-test='sidenav-username']").should(
-      "have.text",
-      "@Katharina_Bernier"
-    );
+    MainDasboard.elements.full_name().should("have.text", "Edgar J");
+    MainDasboard.elements.username().should("have.text", "@Katharina_Bernier");
   });
   it("Check bank account", () => {
     cy.get("[data-test='sidenav-user-full-name']").should(
@@ -29,18 +24,28 @@ describe("Main dashboard", () => {
   });
   it.only("Check transaction filter", () => {
     cy.transactionFilter(480, 880);
-    cy.get("[data-test='transaction-list']")
+    const liItemsValues = [
+      { id: "transaction-sender", value: "Kaylin Homenick" },
+      { id: "transaction-action", value: " paid " },
+      { id: "transaction-receiver", value: "Arely Kertzmann" },
+    ];
+    mainDashboard.elements
+      .transactionList()
       .find("li")
       .should("have.length", 5)
       .and(($li) => {
-        $li.find("p").first().should("have.text", "kjh");
-      })
-      .pause();
+        liItemsValues.forEach((value) => {
+          expect($li.find(`[data-test*=${value.id}]`).eq(0)).to.have.text(
+            value.value
+          );
+        });
+      });
   });
   it("Empty filter", () => {
     cy.transactionFilter(480, 880);
     cy.transactionFilter(580, 880);
-    cy.getByDataId("empty-list-header")
+    mainDashboard.elements
+      .emptyListText()
       .find("h2")
       .should("have.text", "No Transactions");
   });
