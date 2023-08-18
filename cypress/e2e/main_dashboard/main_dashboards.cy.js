@@ -22,7 +22,7 @@ describe("Main dashboard", () => {
       "@Katharina_Bernier"
     );
   });
-  it.only("Check transaction filter", () => {
+  it("Check transaction filter", () => {
     cy.transactionFilter(480, 880);
     const liItemsValues = [
       { id: "transaction-sender", value: "Kaylin Homenick" },
@@ -41,12 +41,12 @@ describe("Main dashboard", () => {
         });
       });
   });
-  it("Empty filter", () => {
-    cy.transactionFilter(480, 880);
+  it.only("Empty filter", () => {
+    mainDashboard.elements.navTab("Friends").click().pause();
+    cy.transactionFilter(380, 880);
     cy.transactionFilter(580, 880);
     mainDashboard.elements
       .emptyListText()
-      .find("h2")
       .should("have.text", "No Transactions");
   });
 });
