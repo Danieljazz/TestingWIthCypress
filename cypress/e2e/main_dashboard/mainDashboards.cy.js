@@ -8,21 +8,15 @@ describe("Main dashboard", () => {
       cy.loginViaUi(data);
     });
   });
-  it("Check user info", () => {
-    MainDasboard.elements.full_name().should("have.text", "Edgar J");
-    MainDasboard.elements.username().should("have.text", "@Katharina_Bernier");
+  it.only("Check user info", () => {
+    cy.fixture("./user/userData").then((user) => {
+      MainDasboard.elements.fullName().should("have.text", user.fullName);
+      MainDasboard.elements.username().should("have.text", user.username);
+      mainDashboard.elements.balance().should("have.text", user.balance);
+      mainDashboard.elements.notifCount().should("have.text", 8);
+    });
   });
-  it("Check bank account", () => {
-    cy.get("[data-test='sidenav-user-full-name']").should(
-      "have.text",
-      "Edgar J"
-    );
-    cy.get("[data-test='sidenav-username']").should(
-      "have.text",
-      "@Katharina_Bernier"
-    );
-  });
-  it("Check transaction filter", () => {
+  it("Check transaction filter home page", () => {
     cy.transactionFilter(480, 880);
     const liItemsValues = [
       { id: "transaction-sender", value: "Kaylin Homenick" },
@@ -41,8 +35,11 @@ describe("Main dashboard", () => {
         });
       });
   });
-  it.only("Empty filter", () => {
+  it("Friends tab transactions", () => {
     mainDashboard.elements.navTab("Friends").click().pause();
+  });
+
+  it("Empty filter", () => {
     cy.transactionFilter(380, 880);
     cy.transactionFilter(580, 880);
     mainDashboard.elements
